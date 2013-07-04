@@ -74,6 +74,10 @@ bool HelloWorld::init()
 		bRet = true;
 	} while (0);
 
+	// cpp with cocos2d-x
+	// Call game logic about every second
+	this->schedule( schedule_selector(HelloWorld::gameLogic), 1.0 );
+
 	return bRet;
 }
 
@@ -83,3 +87,56 @@ void HelloWorld::menuCloseCallback(CCObject* pSender)
 	CCDirector::sharedDirector()->end();
 }
 
+// cpp with cocos2d-x
+void HelloWorld::addTarget()
+{
+	CCSprite *target = CCSprite::create("Target.png", 
+		CCRectMake(0,0,27,40) );
+
+	// Determine where to spawn the target along the Y axis
+	CCSize winSize = CCDirector::sharedDirector()->getWinSize();
+	int minY = target->getContentSize().height/2;
+	int maxY = winSize.height
+		-  target->getContentSize().height/2;
+	int rangeY = maxY - minY;
+	// srand( TimGetTicks() );
+	int actualY = ( rand() % rangeY ) + minY;
+
+	// Create the target slightly off-screen along the right edge,
+	// and along a random position along the Y axis as calculated
+	target->setPosition( 
+		ccp(winSize.width + (target->getContentSize().width/2), 
+		actualY) );
+	this->addChild(target);
+
+	// Determine speed of the target
+	int minDuration = (int)2.0;
+	int maxDuration = (int)4.0;
+	int rangeDuration = maxDuration - minDuration;
+	// srand( TimGetTicks() );
+	int actualDuration = ( rand() % rangeDuration )
+		+ minDuration;
+
+	// Create the actions
+	CCFiniteTimeAction* actionMove = 
+		CCMoveTo::create( (float)actualDuration, 
+		ccp(0 - target->getContentSize().width/2, actualY) );
+	CCFiniteTimeAction* actionMoveDone = 
+		CCCallFuncN::create( this, 
+		callfuncN_selector(HelloWorld::spriteMoveFinished));
+	target->runAction( CCSequence::create(actionMove, 
+		actionMoveDone, NULL) );
+}
+
+// cpp with cocos2d-x
+void HelloWorld::spriteMoveFinished(CCNode* sender)
+{
+	CCSprite *sprite = (CCSprite *)sender;
+	this->removeChild(sprite, true);
+}
+
+// cpp with cocos2d-x
+void HelloWorld::gameLogic(float dt)
+{
+	this->addTarget();
+}

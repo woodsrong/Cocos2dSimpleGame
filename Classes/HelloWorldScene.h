@@ -19,6 +19,12 @@ public:
 
     // implement the "static node()" method manually
     CREATE_FUNC(HelloWorld);
+
+	void addTarget();
+
+	void spriteMoveFinished(CCNode* sender);
+
+	void gameLogic(float dt);
 };
 
 #endif  // __HELLOWORLD_SCENE_H__
