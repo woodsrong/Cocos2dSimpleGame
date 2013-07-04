@@ -36,7 +36,8 @@ public:
 
 protected:
 	cocos2d::CCArray *_targets;
-	cocos2d::CCArray *_projectiles; 
+	cocos2d::CCArray *_projectiles;
+	int _projectilesDestroyed;
 };
 
 #endif  // __HELLOWORLD_SCENE_H__

@@ -1,4 +1,5 @@
 #include "HelloWorldScene.h"
+#include "GameOverScene.h"  
 
 using namespace cocos2d;
 
@@ -42,7 +43,9 @@ HelloWorld::~HelloWorld()
 }
 
 HelloWorld::HelloWorld() :_targets(NULL), _projectiles(NULL)
-{}
+{
+	_projectilesDestroyed = 0;
+}
 
 // on "init" you need to initialize your instance
 bool HelloWorld::init()
@@ -172,6 +175,10 @@ void HelloWorld::spriteMoveFinished(CCNode* sender)
 	if (sprite->getTag() == 1)  // target
 	{
 		_targets->removeObject(sprite);
+
+		GameOverScene *gameOverScene = GameOverScene::create();
+		gameOverScene->getLayer()->getLabel()->setString("You Lose :[");
+		CCDirector::sharedDirector()->replaceScene(gameOverScene); 
 	}
 	else if (sprite->getTag() == 2) // projectile
 	{
@@ -267,6 +274,15 @@ void HelloWorld::update(float dt)
 			{
 				targetsToDelete->addObject(target);
 				projectilesToDelete->addObject(projectile);
+				
+				_projectilesDestroyed++;     
+
+				if (_projectilesDestroyed >= 5)
+				{
+					GameOverScene *gameOverScene = GameOverScene::create();
+					gameOverScene->getLayer()->getLabel()->setString("You Win!");
+					CCDirector::sharedDirector()->replaceScene(gameOverScene);
+				}
 			}
 		}
 	}

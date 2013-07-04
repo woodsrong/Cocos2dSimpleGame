@@ -61,6 +61,9 @@
     <ClInclude Include="..\Classes\HelloWorldScene.h">
       <Filter>include</Filter>
     </ClInclude>
+    <ClInclude Include="GameOverScene.h">
+      <Filter>include</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -70,6 +73,9 @@
       <Filter>source</Filter>
     </ClCompile>
     <ClCompile Include="..\Classes\HelloWorldScene.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="GameOverScene.cpp">
       <Filter>source</Filter>
     </ClCompile>
   </ItemGroup>
