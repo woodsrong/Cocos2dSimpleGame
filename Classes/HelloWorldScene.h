@@ -25,6 +25,8 @@ public:
 	void spriteMoveFinished(CCNode* sender);
 
 	void gameLogic(float dt);
+
+	void ccTouchesEnded(cocos2d::CCSet* touches, cocos2d::CCEvent* event);
 };
 
 #endif  // __HELLOWORLD_SCENE_H__
