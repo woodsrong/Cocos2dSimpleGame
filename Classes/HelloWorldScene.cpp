@@ -23,10 +23,33 @@ CCScene* HelloWorld::scene()
 	return scene;
 }
 
+HelloWorld::~HelloWorld()
+{
+	if (_targets)
+	{
+		_targets->release();
+		_targets = NULL;
+	}
+
+	if (_projectiles)
+	{
+		_projectiles->release();
+		_projectiles = NULL;
+	}
+
+	// cpp don't need to call super dealloc
+	// virtual destructor will do this
+}
+
+HelloWorld::HelloWorld() :_targets(NULL), _projectiles(NULL)
+{}
+
 // on "init" you need to initialize your instance
 bool HelloWorld::init()
 {
 	bool bRet = false;
+	_targets = new CCArray;
+	_projectiles = new CCArray;
 	do 
 	{
 		//////////////////////////////////////////////////////////////////////////
@@ -77,6 +100,8 @@ bool HelloWorld::init()
 	// cpp with cocos2d-x
 	// Call game logic about every second
 	this->schedule( schedule_selector(HelloWorld::gameLogic), 1.0 );
+
+	this->schedule( schedule_selector(HelloWorld::update) ); 
 
 	// set the layer touch-enabled
 	this->setTouchEnabled(true);
@@ -129,6 +154,10 @@ void HelloWorld::addTarget()
 		callfuncN_selector(HelloWorld::spriteMoveFinished));
 	target->runAction( CCSequence::create(actionMove, 
 		actionMoveDone, NULL) );
+
+	// Add to targets array
+	target->setTag(1);
+	_targets->addObject(target);
 }
 
 // cpp with cocos2d-x
@@ -136,6 +165,15 @@ void HelloWorld::spriteMoveFinished(CCNode* sender)
 {
 	CCSprite *sprite = (CCSprite *)sender;
 	this->removeChild(sprite, true);
+
+	if (sprite->getTag() == 1)  // target
+	{
+		_targets->removeObject(sprite);
+	}
+	else if (sprite->getTag() == 2) // projectile
+	{
+		_projectiles->removeObject(sprite);
+	}
 }
 
 // cpp with cocos2d-x
@@ -189,4 +227,59 @@ void HelloWorld::ccTouchesEnded(CCSet* touches, CCEvent* event)
 
 		callfuncN_selector(HelloWorld::spriteMoveFinished)), 
 		NULL) );
+
+	// Add to projectiles array
+	projectile->setTag(2);
+	_projectiles->addObject(projectile); 
 }
+
+void HelloWorld::update(float dt)
+{
+	CCArray *projectilesToDelete = new CCArray;
+	CCArray* targetsToDelete =new CCArray;
+	CCObject* it = NULL;
+	CCObject* jt = NULL;
+
+	CCARRAY_FOREACH(_projectiles, it)
+	{
+		CCSprite *projectile = dynamic_cast<CCSprite*>(it);
+		CCRect projectileRect = CCRectMake(
+			projectile->getPosition().x - (projectile->getContentSize().width/2),
+			projectile->getPosition().y - (projectile->getContentSize().height/2),
+			projectile->getContentSize().width,
+			projectile->getContentSize().height);
+
+		CCARRAY_FOREACH(_targets, jt)
+		{
+			CCSprite *target = dynamic_cast<CCSprite*>(jt);
+			CCRect targetRect = CCRectMake(
+				target->getPosition().x - (target->getContentSize().width/2),
+				target->getPosition().y - (target->getContentSize().height/2),
+				target->getContentSize().width,
+				target->getContentSize().height);
+
+			if (projectileRect.intersectsRect(targetRect))
+			{
+				targetsToDelete->addObject(target);
+				projectilesToDelete->addObject(projectile);
+			}
+		}
+	}
+
+	CCARRAY_FOREACH(targetsToDelete, jt)
+	{
+		CCSprite *target = dynamic_cast<CCSprite*>(jt);
+		_targets->removeObject(target);
+		this->removeChild(target, true);
+	}
+
+	CCARRAY_FOREACH(projectilesToDelete, it)
+	{
+		CCSprite* projectile = dynamic_cast<CCSprite*>(it);
+		_projectiles->removeObject(projectile);
+		this->removeChild(projectile, true);
+	}
+
+	projectilesToDelete->release();
+	targetsToDelete->release();
+}  
