@@ -36,6 +36,12 @@
     <None Include="..\Resources\Projectile.png">
       <Filter>resource</Filter>
     </None>
+    <None Include="C:\Users\woodsrong\Downloads\Cocos2dxSimpleGame\Cocos2dxSimpleGame\Resources\pew-pew-lei.wav">
+      <Filter>resource</Filter>
+    </None>
+    <None Include="C:\Users\woodsrong\Downloads\Cocos2dxSimpleGame\Cocos2dxSimpleGame\Resources\background-music-aac.wav">
+      <Filter>resource</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Cocos2dSimpleGame.rc">

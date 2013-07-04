@@ -132,6 +132,8 @@
     <None Include="..\Resources\Player.png" />
     <None Include="..\Resources\Projectile.png" />
     <None Include="..\Resources\Target.png" />
+    <None Include="C:\Users\woodsrong\Downloads\Cocos2dxSimpleGame\Cocos2dxSimpleGame\Resources\background-music-aac.wav" />
+    <None Include="C:\Users\woodsrong\Downloads\Cocos2dxSimpleGame\Cocos2dxSimpleGame\Resources\pew-pew-lei.wav" />
     <None Include="res\Cocos2dSimpleGame.ico" />
   </ItemGroup>
   <ItemGroup>

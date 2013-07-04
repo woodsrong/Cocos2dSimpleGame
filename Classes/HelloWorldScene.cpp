@@ -106,6 +106,9 @@ bool HelloWorld::init()
 	// set the layer touch-enabled
 	this->setTouchEnabled(true);
 
+	// background music
+	CocosDenshion::SimpleAudioEngine::sharedEngine()->playBackgroundMusic("background-music-aac.wav", true);
+
 	return bRet;
 }
 
@@ -230,7 +233,9 @@ void HelloWorld::ccTouchesEnded(CCSet* touches, CCEvent* event)
 
 	// Add to projectiles array
 	projectile->setTag(2);
-	_projectiles->addObject(projectile); 
+	_projectiles->addObject(projectile);
+
+	CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect("pew-pew-lei.wav"); 
 }
 
 void HelloWorld::update(float dt)
