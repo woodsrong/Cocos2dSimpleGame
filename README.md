@@ -1,7 +1,7 @@
 Cocos2dSimpleGame
 =================
 
-Cocos2dSimpleGame Demo.  
+Cocos2dSimpleGame Demo, baseed on cocos2d-2.0-x-2.0.4.  
 
 
 Step by Step Cocos2dxSimpleGame Series.  
