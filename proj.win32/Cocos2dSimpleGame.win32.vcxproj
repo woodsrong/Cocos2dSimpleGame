@@ -38,6 +38,7 @@
     <OutDir>$(SolutionDir)$(Configuration).win32\</OutDir>
     <IntDir>$(Configuration).win32\</IntDir>
     <LinkIncremental>true</LinkIncremental>
+    <PostBuildEventUseInBuild>false</PostBuildEventUseInBuild>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(SolutionDir)$(Configuration).win32\</OutDir>
@@ -82,6 +83,9 @@
       <DllDataFileName>
       </DllDataFileName>
     </Midl>
+    <PostBuildEvent>
+      <Command>xcopy /Y /E .\Resources\*.* $(OutDir)</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -125,6 +129,9 @@
     <None Include="..\Resources\CloseNormal.png" />
     <None Include="..\Resources\CloseSelected.png" />
     <None Include="..\Resources\HelloWorld.png" />
+    <None Include="..\Resources\Player.png" />
+    <None Include="..\Resources\Projectile.png" />
+    <None Include="..\Resources\Target.png" />
     <None Include="res\Cocos2dSimpleGame.ico" />
   </ItemGroup>
   <ItemGroup>

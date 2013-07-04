@@ -27,6 +27,15 @@
     <None Include="..\Resources\HelloWorld.png">
       <Filter>resource</Filter>
     </None>
+    <None Include="..\Resources\Target.png">
+      <Filter>resource</Filter>
+    </None>
+    <None Include="..\Resources\Player.png">
+      <Filter>resource</Filter>
+    </None>
+    <None Include="..\Resources\Projectile.png">
+      <Filter>resource</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Cocos2dSimpleGame.rc">

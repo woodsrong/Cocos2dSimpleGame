@@ -5,7 +5,7 @@
 
 #include "SimpleAudioEngine.h"
 
-class HelloWorld : public cocos2d::CCLayer
+class HelloWorld : public cocos2d::CCLayerColor
 {
 public:
     // Here's a difference. Method 'init' in cocos2d-x returns bool, instead of returning 'id' in cocos2d-iphone
